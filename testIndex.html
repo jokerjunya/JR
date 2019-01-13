@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <meta charset="utf-8">
+    <style>
+      body {
+        font-family: "Avenir Next";
+      }
+      li{
+        list-style: none;
+      }
+      h2 {
+        color: orange;
+        font-size: x-large;
+      }
+      p {
+        color: gray;
+        font-size: small;
+      }
+      .header {
+        background-color: #DB0101;
+        color: #fff;
+        height: 90px;
+      }
+      .header-logo {
+        float: left;
+        font-size: 36px;
+        padding: 20px 40px;
+      }
+      .Date{
+        background-color: #DB0101;
+      }
+      .matrix{
+        background-color: #D5AB99;
+      }      
+      @keyframes click-wave{
+	    0%{
+		  position: relative;
+		  width: 30px;
+		  height: 30px;
+		  opacity: 0.35;
+	    }
+	    100% {
+		  width: 200px;
+		  height: 200px;
+		  margin-top: -80px;
+		  margin-left: -80px;
+		  opacity: 0;
+	    }
+      }
+      .matrix .CB{
+	    position: relative;
+	    top: 5.33333px;
+	    right: 0;
+	    bottom: 0;
+	    left: 0;
+	    width: 30px;
+	    height: 30px;
+	    margin-right: 0.5rem;
+	    cursor: pointer;
+	    transition: all 0.15s ease-out 0s;
+	    color: #ffffff;
+	    border: none;
+	    outline: none;
+	    background: #d7cbcb;
+	    -webkit-appearance: none;
+	           appearance: none;
+      }
+      .matrix .CB:before{
+	    font-size: 20px;
+	    line-height: 30px;
+	    position: absolute;
+	    display: inline-block;
+	    width: 30px;
+	    height: 30px;
+	    content: '❌';
+	    text-align: center;
+      }
+      .matrix .CB:hover{
+        background: #d6a9a9;
+      }
+      .matrix .CB:checked{
+        background: #da3c41;
+      }
+      .matrix .CB:checked::before{
+	    font-size: 20px;
+	    line-height: 30px;
+	    position: absolute;
+	    display: inline-block;
+	    width: 30px;
+	    height: 30px;
+	    content: '⭕';
+	    text-align: center;
+      }
+      .checkbox{
+        
+      }
+      input{
+        border-color:#B13500;
+      }
+      
+      
+    </style>
+  </head>
+  <body>
+      <div class="header">
+      <div class="header-logo">Ochman</div>
+      <div class="header-list">
+        <ul>
+          <li>プログラミングとは</li>
+          <li>学べるレッスン</li>
+          <li>お問い合わせ</li>
+        </ul>
+      </div>
+      </div>
+    <ul class="matrix">
+      <?
+        var myData = SpreadsheetApp.openById(schid).getDataRange().getValues();
+        var lastColumn = myData[0].length;
+        var lastRow = myData.length;
+        
+        output.append('<form id="form">');
+        output.append('<table border="' + lastRow + '">');
+        
+        for(var j = 0;j < lastRow; j++) {
+          output.append('<th class="Date">' + myData[0][j] + '</th>');
+        }
+        for(var i = 1;i < lastRow; i++){
+          output.append('<tr class="matrix">');
+          for(var j = 0;j < lastColumn; j++) {     
+            if(j == 0) {
+              output.append('<td>' + myData[i][0] + '</td>');     //縦軸に時間帯を出力
+            } else {
+              output.append('<td class="checkbox"><input type="checkbox" class="CB" name="check" id="check1" value="1" checked="checked">');
+              output.append('<label for="check">label</label></td>');
+            }
+          }
+          output.append('</tr>');
+        }
+        output.append('</table>');
+        output.append('</form>');
+      ?>
+    </ul>
+    <button class="contact-submit" type="submit" id="bt">送信</button>
+     
+  </body>
+</html>
